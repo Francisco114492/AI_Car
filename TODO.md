@@ -8,3 +8,12 @@
     // TODO: implica modificar main.py e car_nn
 
     // TODO: função ou ficheiro que recebe nome de imagem, vai buscar a imagem e os dados
+
+
+// Futuro:
+
+Menu onde pode ser selecionado pixel e a distância original da pista (possivelmente também mostrar em baixo a distância em pixels)
+Em baixo mostra as coordenadas.
+Ao selecionar um ponto (com botão esquerdo, dá "lock" nesse ponto.
+Depois de dar "lock", deixa rodar para escolher um ângulo.
+A seguir deixa criar um txt com os dados.

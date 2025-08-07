@@ -1,5 +1,5 @@
 import numpy as np
-
+from numba import njit
 from Neural_Network import NeuralNetwork
 
 class ELU(NeuralNetwork):

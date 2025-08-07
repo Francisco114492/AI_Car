@@ -4,8 +4,6 @@ import importlib
 import os
 import glob
 import re
-import subprocess
-import numpy as np
 
 # Inicializar o pygame
 pygame.init()
