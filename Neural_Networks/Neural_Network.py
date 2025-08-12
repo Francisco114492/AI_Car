@@ -1,5 +1,6 @@
 import numpy as np
 import pygame
+import inspect
 
 class NeuralNetwork:
     def __init__(self, layer_sizes, weights=None, biases=None):
@@ -123,3 +124,12 @@ class NeuralNetwork:
                 color = weight_to_color(w, min_w, max_w)
                 width = max(1, int(min(abs(w) * 3, 2)))
                 pygame.draw.line(surface, color, start, end, width)
+
+    @classmethod
+    def get_available_networks(cls):
+        networks = {}
+        for subclass in cls.__subclasses__():
+            name = subclass.__name__
+            doc = inspect.getdoc(subclass) or None
+            networks[name] = doc
+        return networks

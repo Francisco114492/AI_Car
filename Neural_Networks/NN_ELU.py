@@ -1,8 +1,11 @@
 import numpy as np
 from numba import njit
-from Neural_Network import NeuralNetwork
+from .neural_network import NeuralNetwork
 
 class ELU(NeuralNetwork):
+    '''
+    Exponential Linear Unit (ELU)
+    '''
     def __init__(self, layer_sizes, alfa):
         super().__init__(self, layer_sizes)
         self.alfa=alfa

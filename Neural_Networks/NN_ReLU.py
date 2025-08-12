@@ -1,6 +1,6 @@
 import numpy as np
 
-from Neural_Network import NeuralNetwork
+from .neural_network import NeuralNetwork
 
 class ReLU(NeuralNetwork):
     def forward(self, x):

@@ -1,5 +1,4 @@
-from . import Car
-
+from .car import Car
 
 COEF=0.2
 

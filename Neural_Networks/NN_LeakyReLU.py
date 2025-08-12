@@ -1,8 +1,11 @@
 import numpy as np
 
-from Neural_Network import NeuralNetwork
+from .neural_network import NeuralNetwork
 
 class LeakyReLU(NeuralNetwork):
+    '''
+    Leaky ReLU activation function for neural networks.
+    '''
     def __init__(self, layer_sizes, alfa):
         super().__init__(self, layer_sizes)
         self.alfa=alfa

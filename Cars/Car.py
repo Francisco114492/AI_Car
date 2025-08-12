@@ -1,6 +1,7 @@
 import math
 import numpy as np
 import pygame
+import inspect
 
 class Car:
     def __init__(self, x, y, angle, neural_net, sensors_angles=[], car_size=5, max_speed=5, color = (0,0,0), finish_color = (0,255,0)):
@@ -156,3 +157,15 @@ class Car:
             end_x = self.x + math.cos(self.angle + s_angle) * distance
             end_y = self.y + math.sin(self.angle + s_angle) * distance
             pygame.draw.line(screen, (0, 255, 0), (self.x, self.y), (end_x, end_y), 1)
+
+    @classmethod
+    def get_available_cars(cls):
+        cars = {}
+        name = cls.__name__
+        doc = inspect.getdoc(cls) or None
+        cars[name] = doc
+        for subclass in cls.__subclasses__():
+            name = subclass.__name__
+            doc = inspect.getdoc(subclass) or None
+            cars[name] = doc
+        return cars
