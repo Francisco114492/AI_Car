@@ -1,0 +1,46 @@
+{
+    "Track1": {
+        "Track_img": "Track1.png",
+        "DESCRIPTION": "",
+        "MAP_STATS": [1400, 800],
+        "START_POS": [100, 500],
+        "START_ANGLE": 0,
+        "BOUND_COLOR": [0, 0, 0],
+        "FINISH_COLOR": [0, 255, 0]
+    },
+    "Track2": {
+        "Track_img": "Track2.png",
+        "DESCRIPTION": "",
+        "MAP_STATS": [1400, 800],
+        "START_POS": [100, 500],
+        "START_ANGLE": 1.570796,
+        "BOUND_COLOR": [0, 0, 0],
+        "FINISH_COLOR": [0, 255, 0]
+    },
+    "Track3": {
+        "Track_img": "Track3.png",
+        "NAME": "Nürburgring",
+        "DESCRIPTION": "Nürburgring caraças, siga!",
+        "MAP_STATS": [1400, 800],
+        "START_POS": [100, 500],
+        "START_ANGLE": -2.356194,
+        "BOUND_COLOR": [0, 0, 0],
+        "REAL_DISTANCE": 22000
+    },
+    "Track4": {
+        "Track_img": "Track4.png",
+        "DESCRIPTION": "",
+        "MAP_STATS": [1400, 800],
+        "START_POS": [100, 500],
+        "START_ANGLE": -2.356194,
+        "BOUND_COLOR": [0, 0, 0]
+    },
+    "Track5": {
+        "Track_img": "Track5.png",
+        "DESCRIPTION": "",
+        "MAP_STATS": [1400, 800],
+        "START_POS": [100, 500],
+        "START_ANGLE": 0.785399,
+        "BOUND_COLOR": [0, 0, 0]
+    }
+}

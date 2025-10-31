@@ -1,6 +1,6 @@
 import pygame
 
-from ui_utils.ui_menu import UiItem
+from ui_utils_t.ui_menu import UiItem
 
 BRANCO = (255, 255, 255)
 PRETO = (0, 0, 0)
@@ -8,15 +8,17 @@ CINZENTO = (200, 200, 200)
 AZUL_CLARO = (100, 150, 200)
 
 class Checkbox(UiItem):
-    def __init__(self, x, y, texto, name=None, group=None, enabled=True):
+    def __init__(self, x, y, texto, name=None, group=None, enabled=True, font_size = 36):
         super().__init__(x, y, 20, 20, name)
         self.checked = False
         self.texto = texto
         self.group = group
         self.enabled = enabled
-        self.font = pygame.font
+        self.font = pygame.font.SysFont("Arial", font_size)
 
     def draw(self, screen):
+        if not self.visible:
+            return
         cor_fundo = BRANCO if self.enabled else CINZENTO
         pygame.draw.rect(screen, cor_fundo, self.rect)
         pygame.draw.rect(screen, PRETO, self.rect, 2)

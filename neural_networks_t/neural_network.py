@@ -3,6 +3,14 @@ import pygame
 import inspect
 
 class NeuralNetwork:
+    '''
+    Utilitary neural network class.
+    Implements functions one would need for a neural network.
+    Main purpose is to be inherited by other neural networks.
+    '''
+    networks_list = []
+    networks_dict = {}
+    
     def __init__(self, layer_sizes, weights=None, biases=None):
         self.layer_sizes = layer_sizes
         self.num_layers = len(layer_sizes)
@@ -14,6 +22,10 @@ class NeuralNetwork:
         self.biases = biases if biases is not None else [
             np.random.randn(size, 1) for size in layer_sizes[1:]
         ]
+    
+    def __repr__(self):
+        attrs = ", ".join(f"{k}={v!r}" for k, v in self.__dict__.items())
+        return f"{self.__class__.__name__}({attrs})"
 
     def mutate(self, rate):
         '''
@@ -66,7 +78,7 @@ class NeuralNetwork:
         layers = [self.input_size, self.hidden_size, self.output_size]
         positions = []
 
-        font = pygame.font.SysFont(None, 16)
+        font = pygame.font.SysFont("Arial", 16)
 
         all_weights = np.concatenate((self.W1.flatten(), self.W2.flatten()))
         min_w = np.min(all_weights)
@@ -127,9 +139,18 @@ class NeuralNetwork:
 
     @classmethod
     def get_available_networks(cls):
-        networks = {}
+        cls.networks_list = []
+        cls.networks_dict = {}
         for subclass in cls.__subclasses__():
             name = subclass.__name__
             doc = inspect.getdoc(subclass) or None
-            networks[name] = doc
-        return networks
+            cls.networks_dict[name] = doc
+            cls.networks_list.append(subclass)
+        return cls.networks_list, cls.networks_dict
+    
+    @classmethod
+    def get_nn(cls, name):
+        for subclass in cls.networks_list:
+            if subclass.__name__ == name:
+                return subclass
+        return None

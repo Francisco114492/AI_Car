@@ -1,9 +1,16 @@
 import math
-import numpy as np
 import pygame
 import inspect
 
-class Car:
+class CarBase:
+    '''
+    Simple car class for a car in the game.
+    Also has a simple logic for updating position and speed.
+    '''
+
+    cars_list = []
+    cars_dict = {}
+
     def __init__(self, x, y, angle, neural_net, sensors_angles=[], car_size=5, max_speed=5, color = (0,0,0), finish_color = (0,255,0)):
         '''
         Initializes all the car variables
@@ -20,6 +27,8 @@ class Car:
         self.max_speed = max_speed
         self.bound_color = color
         self.finish_line_color = finish_color
+        self.input_size = len(sensors_angles)
+        self.output_size = 2
 
         # variables for tests or evaluation
         self.distance = 0  # a measure used for fitness (distance traveled)
@@ -29,6 +38,26 @@ class Car:
         self.output = []
         self.alive = True
         self.finished = False
+
+    def __repr__(self):
+        attrs = ", ".join(f"{k}={v!r}" for k, v in self.__dict__.items())
+        return f"{self.__class__.__name__}({attrs})"
+    
+    def __str__(self):
+        return f'''Car object:
+    car_size: {self.car_size}
+    max_speed: {self.max_speed}
+    sensors angles: {list(self.sensors.keys())}
+    Bound color: {self.bound_color}
+    Finish line color: {self.finish_line_color}
+Neural Network: {self.network}
+'''
+    
+    def __lt__(self, other): # the comparison of cars is now based on distance traveled
+        return self.distance < other.distance
+
+    def __eq__(self, other):
+        return self.distance == other.distance
 
     def sense(self, track):
         """
@@ -78,56 +107,6 @@ class Car:
         finish_color = self.finish_line_color
         return pixel[:3] == finish_color
        
-    def forward(self, track, dt,sim_time, sensors, surface=None):
-        '''
-        Updates the car based on the outputs of steering and acceleration
-        '''
-        if not self.alive:
-            return
-        
-        # Obtain sensor inputs from the environment
-        inputs = np.array(sensors).reshape(-1, 1)
-        if surface:
-            self.network.draw(surface, inputs)
-        # Returns the output based on the input
-        outputs = self.network.forward(inputs)
-        self.output.append([sim_time,outputs[0,0],outputs[1,0],self.speed,self.x,self.y])
-
-        self.update(outputs, dt)
-
-        # Check for collision
-        if self.check_collision(track):
-            self.alive = False
-        
-        # Check if the car has reached the finish line
-        if self.check_finish(track):
-            self.alive = False
-            self.finished = True
-
-    def update(self, input, dt):
-        '''
-        # Two Neural Network outputs:
-        # outputs[0]: steering command (negative: left, positive: right)
-        # outputs[1]: acceleration command (negative: decelerate, positive: accelerate)
-        # keeps record of the position and outputs given to the vehicle
-        # '''
-        # Update the car's angle and speed based on outputs
-        steering = input[0, 0]
-        accel_signal = input[1, 0]
-        turn_rate = 0.2 - (self.speed/800)  # scaling factor for turning
-        self.angle += steering * turn_rate
-        
-        acceleration = accel_signal * 100  # scaling factor for acceleration
-        self.speed += acceleration * dt
-        self.speed *= 0.99  # apply simple friction
-        # Clamp speed to the range [0, max_speed]
-        self.speed = max(self.max_speed/2, min(self.speed, self.max_speed))
-        
-        # Update position and accumulate distance traveled
-        prev_x, prev_y = self.x, self.y
-        self.x += math.cos(self.angle) * self.speed * dt
-        self.y += math.sin(self.angle) * self.speed * dt
-        self.distance += math.hypot(self.x - prev_x, self.y - prev_y)
         
     def get_car_vertices(self):
         front = (
@@ -160,12 +139,18 @@ class Car:
 
     @classmethod
     def get_available_cars(cls):
-        cars = {}
-        name = cls.__name__
-        doc = inspect.getdoc(cls) or None
-        cars[name] = doc
+        cls.cars_list = []
+        cls.cars_dict = {}
         for subclass in cls.__subclasses__():
             name = subclass.__name__
             doc = inspect.getdoc(subclass) or None
-            cars[name] = doc
-        return cars
+            cls.cars_dict[name] = doc
+            cls.cars_list.append(subclass)
+        return cls.cars_list, cls.cars_dict
+    
+    @classmethod
+    def get_car(cls, name):
+        for subclass in cls.cars_list:
+            if subclass.__name__ == name:
+                return subclass
+        return None

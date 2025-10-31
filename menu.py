@@ -1,16 +1,7 @@
 import pygame
 
-import Cars 
-import Neural_Networks
-from ui_utils.ui_mainmenu import MainMenu
-from ui_utils.collapse_button import ColapseButton
-from ui_utils.button import Button
-from ui_utils.textbox import TextBox, NumericTextbox
-from ui_utils.slider import Slider
-from ui_utils.check_box import Checkbox
-
-from Neural_Networks.neural_network import NeuralNetwork
-from Cars.car import Car
+from ui_utils_t.ui_mainmenu import MainMenu
+from ui_utils_t.ui_sim import UiSimulation
 
 BRANCO = (255, 255, 255)
 PRETO = (0, 0, 0)
@@ -25,29 +16,39 @@ def main():
     pygame.init()
     screen = pygame.display.set_mode((WIN_WIDTH, WIN_HEIGHT), pygame.RESIZABLE)
     pygame.display.set_caption('AI Game - Main Menu')
-    font = pygame.font.SysFont(None, 36)
+    font = pygame.font.SysFont("Arial", 36)
     clock = pygame.time.Clock()
 
-    main_menu = MainMenu(screen, font)  # cria o menu principal
+    main_menu = MainMenu(screen, font, 0, 0, WIN_WIDTH, WIN_HEIGHT, visible = True)  # cria o menu principal
+    sim_menu = UiSimulation(screen, font, 0, 0, WIN_WIDTH, WIN_HEIGHT, car = None, nn = None, track = None, visible = False)
+
     running = True
 
     while running:
         screen.fill(AZUL_CLARO)
         main_menu.draw()
+        sim_menu.draw()
 
+        
         for event in pygame.event.get():
+            start_button=main_menu.get_item('start_sim_button')
+            if start_button.handle_event(event) and start_button.visible and main_menu.visible:
+                sim_menu.set_car(main_menu.car)
+                sim_menu.set_nn(main_menu.nn)
+                sim_menu.set_track(main_menu.track)
+
+                main_menu.visible = False
+                sim_menu.visible = True
             if event.type == pygame.QUIT:
                 running = False
             else:
-                main_menu.handle_events(event)
+                main_menu.handle_events(event) if main_menu.visible else None
+                sim_menu.handle_events(event) if sim_menu.visible else None
+
 
         pygame.display.flip()
         clock.tick(60)
 
     pygame.quit()
-
-def simulation(screen, font, test=False):
-    pygame.display.set_caption('AI Game - Simulation')
-
 
 main()

@@ -3,6 +3,7 @@ import numpy as np
 from .neural_network import NeuralNetwork
 
 class tanh(NeuralNetwork):
+    ''''''
     def forward(self, x):
         self.activations = [x]
         self.z_values = []

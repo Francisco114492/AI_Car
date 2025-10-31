@@ -2,15 +2,16 @@ import numpy as np
 
 from .neural_network import NeuralNetwork
 
-class sigmoid(NeuralNetwork):
+class ReLU(NeuralNetwork):
+    ''''''
     def forward(self, x):
         z1 = np.dot(self.W1, x) + self.b1
-        a1 = np.sigmoid(z1)
+        a1 = np.maximum(0, z1)  # ReLU
         z2 = np.dot(self.W2, a1) + self.b2
-        a2 = 2* np.sigmoid(z2) - 1
+        a2 = np.tanh(z2) # tanh for output in range (-1, 1)
         return a2
     def forward(self, x):
-        self.activations = [x]
+        self.activations = [x] # used for drawing the neural network, stores the arrays
         self.z_values = []
 
         a = x
@@ -19,9 +20,8 @@ class sigmoid(NeuralNetwork):
             self.z_values.append(z)
 
             if i < self.num_layers - 2:
-                a = np.sigmoid(z)
+                a = np.maximum(0, z)
             else:
-                a = 2 * np.tanh(z) -1 
-            # alternative to tanh for output in range (-1, 1)
+                a = np.tanh(z) # tanh for output in range (-1, 1)
             self.activations.append(a)
         return a
