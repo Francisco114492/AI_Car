@@ -1,6 +1,6 @@
 import pygame
 
-from ui_utils_t.ui_menu import UiItem
+from ui_utils.ui_menu import UiItem
 
 
 class Slider(UiItem):

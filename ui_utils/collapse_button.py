@@ -1,6 +1,6 @@
 import pygame
 
-from ui_utils_t.ui_menu import UiItem
+from ui_utils.ui_menu import UiItem
 
 class ColapseButton(UiItem):
     def __init__(self, x, y, width, height, name=None, options=None, open=False, default_text="Selecione...    ↘", side = 'below', max_visible=5, font_size = 24):
