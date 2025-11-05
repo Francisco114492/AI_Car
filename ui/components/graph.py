@@ -1,6 +1,6 @@
 import pygame
 
-from ui_utils.ui_menu import UiItem
+from ui.core.ui_item import UiItem
 
 class UiGraph(UiItem):
     def __init__(self, x, y, width, height, x_axis_label, y_axis_label, x_axis_range, y_axis_range, data_color=(0,0,0), data_size=100, font_size=16, name=None, visible = True):

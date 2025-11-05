@@ -1,6 +1,6 @@
 import pygame
 
-from ui_utils.ui_menu import UiItem
+from ui.core.ui_item import UiItem
 
 BRANCO = (255, 255, 255)
 PRETO = (0, 0, 0)

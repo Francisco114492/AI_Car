@@ -1,7 +1,7 @@
 import pygame
 
-from ui_utils.ui_mainmenu import MainMenu
-from ui_utils.ui_sim import UiSimulation
+from ui.screens.mainmenu import MainMenu
+from ui.screens.sim import UiSimulation
 
 BRANCO = (255, 255, 255)
 PRETO = (0, 0, 0)

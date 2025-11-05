@@ -1,11 +1,11 @@
 import pygame
 
-from ui_utils.ui_menu import Menu
+from ui.core.ui_menu import Menu
 from neural_networks.neural_network import NeuralNetwork
-from ui_utils.collapse_button import ColapseButton
-from ui_utils.textbox import TextBox, HiddenLayersTextbox, NumericTextbox
-from ui_utils.button import Button
-from ui_utils.slider import Slider
+from ui.components.collapse_button import ColapseButton
+from ui.components.textbox import TextBox, HiddenLayersTextbox, NumericTextbox
+from ui.components.button import Button
+from ui.components.slider import Slider
 from cars.car_base import CarBase
 from tracks.track_utils import Track
 

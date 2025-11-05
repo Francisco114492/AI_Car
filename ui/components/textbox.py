@@ -1,7 +1,7 @@
 import pygame
 import time
 
-from ui_utils.ui_menu import UiItem
+from ui.core.ui_item import UiItem
 
 
 class TextBox(UiItem):
@@ -63,6 +63,7 @@ class TextBox(UiItem):
 
 
 class NumericTextbox(TextBox):
+    """Textbox that only accepts numbers"""
     def handle_event(self, event):
         super().handle_event(event)
         if event.type == pygame.KEYDOWN and self.active:
@@ -72,6 +73,7 @@ class NumericTextbox(TextBox):
         
 
 class HiddenLayersTextbox(NumericTextbox):
+    """Textbox specialized for defining neural network hidden layers"""
     def handle_event(self, event):
         super().handle_event(event)
         if event.type == pygame.KEYDOWN and self.active:

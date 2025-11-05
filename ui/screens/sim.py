@@ -1,7 +1,7 @@
 import pygame
 
-from .ui_menu import Menu, UiItem
-from ui_utils.graph import UiGraph
+from ..core.ui_menu import Menu, UiItem
+from ui.components.graph import UiGraph
 
 class UiSimulation(Menu):
     def __init__(self, screen, font, x, y, width, height, car, nn, track, visible=True, test = False):
